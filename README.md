@@ -1,2 +1,0 @@
-fiware-cosmos-gui
-=================
