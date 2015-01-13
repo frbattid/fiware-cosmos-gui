@@ -156,7 +156,8 @@ public class CommandsMgr extends HttpServlet {
             Process p = null;
                         
             // check if the Cosmos username is already registered
-            p = Runtime.getRuntime().exec(new String[]{"bash", "-c", "cat /etc/passwd | grep " + cosmosUsername});
+            p = Runtime.getRuntime().exec(new String[]{"bash", "-c", "cat /etc/passwd | grep ^" + cosmosUsername
+                    + ":"});
             p.waitFor();
             
             if (p.exitValue() == 0) {
@@ -199,10 +200,12 @@ public class CommandsMgr extends HttpServlet {
             
             // set the proper owner of the HDFS space
             p = Runtime.getRuntime().exec(new String[]{"bash", "-c",
-                "sudo -u hdfs hadoop fs -chown -R " + cosmosUsername + ":cosmos /user/" + cosmosUsername});
+                "sudo -u hdfs hadoop fs -chown -R " + cosmosUsername + ":" + cosmosUsername + " /user/"
+                    + cosmosUsername});
             p.waitFor();
-            logger.info("Executing \"sudo -u hdfs hadoop fs -chown -R " + cosmosUsername + ":cosmos /user/"
-                    + cosmosUsername + "\", exit value = " + p.exitValue() + (p.exitValue() == 1 ? ", details = "
+            logger.info("Executing \"sudo -u hdfs hadoop fs -chown -R " + cosmosUsername + ":" + cosmosUsername
+                    + " /user/" + cosmosUsername + "\", exit value = " + p.exitValue()
+                    + (p.exitValue() == 1 ? ", details = "
                     + new BufferedReader(new InputStreamReader(p.getErrorStream())).readLine() : ""));
             
             if (p.exitValue() != 0) {
