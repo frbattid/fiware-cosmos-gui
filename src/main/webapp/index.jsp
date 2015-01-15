@@ -69,7 +69,7 @@
             </form>
         </div>
         <div id="filab-link">
-            <h3>If you still do not have a FI-LAB user, click <a href="https://account.lab.fi-ware.org/users/sign_up">here</a>.</h3>
+            <h3>If you still do not have a FI-LAB user, click <a href="https://account.lab.fiware.org/users/sign_up">here</a>.</h3>
         </div>
         <div id="footer">
             2014 

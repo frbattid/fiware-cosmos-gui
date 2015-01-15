@@ -130,7 +130,7 @@ public class ConnectionsManager {
             return null;
         } // if
         
-        SSLSocketFactory sf = new SSLSocketFactory(sslContext);
+        SSLSocketFactory sf = new SSLSocketFactory(sslContext, SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
         Scheme httpsScheme = new Scheme("https", 443, sf);
         SchemeRegistry schemeRegistry = new SchemeRegistry();
         schemeRegistry.register(httpsScheme);

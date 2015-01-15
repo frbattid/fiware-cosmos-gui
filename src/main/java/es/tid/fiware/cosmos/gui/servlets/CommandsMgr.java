@@ -135,7 +135,7 @@ public class CommandsMgr extends HttpServlet {
         try {
             // try to get an access token, given the IdM username and its password
             IdMInterface idmInterface =
-                    new IdMInterface("account.lab.fi-ware.org", "443", new ConnectionsManager(true));
+                    new IdMInterface("account.lab.fiware.org", "443", new ConnectionsManager(true));
             TokenInformation tokenInfo = idmInterface.getAccessToken(idmUsername, idmPassword, "748",
                     "0216b70dd74cb6d15d69a3e83d57b68cc5e77431616485206a1bbd3e43e0369f77c5ba22deee4a88c4b7b09d6532bdd3"
                     + "9124397f83892e1855fae1711ed52a08");

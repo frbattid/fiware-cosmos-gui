@@ -67,7 +67,7 @@ public class IdMInterface {
     public TokenInformation getAccessToken(String user, String password, String clientId,
             String clientSecret) {
         logger.info("Getting an access token from the IdM, user=" + user + ", clientId=" + clientId);
-        DefaultHttpClient httpClient = connectionsManager.getHttpClient(false);
+        DefaultHttpClient httpClient = connectionsManager.getHttpClient(true);
         HttpPost httpPost = new HttpPost("https://" + host + ":" + port + "/oauth2/token");
         logger.info(">>> " + httpPost.toString());
         TokenInformation tokenInformation = null;
