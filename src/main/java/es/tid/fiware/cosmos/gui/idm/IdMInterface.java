@@ -25,12 +25,16 @@ import org.apache.commons.codec.binary.Base64;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.logging.Level;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.log4j.Logger;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -132,17 +136,25 @@ public class IdMInterface {
      * @param json The json representation of the OAuth2 token.
      * @return
      */
-    private TokenInformation createTokenInformation(String json) {
+    public TokenInformation createTokenInformation(String json) {
         if (!json.contains("access_token")) {
             return null;
         } // if
         
+        JSONParser j = new JSONParser();
+        JSONObject o = null;
+        
+        try {
+            o = (JSONObject) j.parse(json);
+        } catch (ParseException ex) {
+            return null;
+        } // try catch
+        
         TokenInformation ti = new TokenInformation();
-        String[] pairs = json.replaceAll("\\{", "").replaceAll("\\}", "").replaceAll("\"", "").split(",");
-        ti.setAccessToken(pairs[0].split(":")[1]);
-        ti.setRefreshToken(pairs[1].split(":")[1]);
-        ti.setType(pairs[2].split(":")[1]);
-        ti.setExpirationTime(new Long(pairs[3].split(":")[1]).longValue());
+        ti.setAccessToken((String) o.get("access_token"));
+        ti.setExpirationTime((Long) o.get("expires_in"));
+        ti.setRefreshToken((String) o.get("refresh_token"));
+        ti.setType((String) o.get("token_type"));
         return ti;
     } // createTokenInformation
 
